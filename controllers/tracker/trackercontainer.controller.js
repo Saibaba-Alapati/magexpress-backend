@@ -1,4 +1,4 @@
-const client = require('/Users/saibabaalapati/Desktop/magexpress/backend/database.js')
+const client = require('.././../database');
 // CREATE AND SAVE TRACKER CONTAINER
 exports.createTrackerContainer = (req, res) => {
     if(!req.body.name){

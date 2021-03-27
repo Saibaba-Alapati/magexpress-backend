@@ -9,11 +9,7 @@ const cookieParser = require('cookie-parser');
 const trackercontainerroute = require('./routes/tracker/trackercontainer');
 const categorycontainerroute = require('./routes/tracker/categorycontainer');
 const trackerroute = require('./routes/tracker/tracker');
-const directchatroute = require('./routes/communications/directchats/directchat');
-const roomroute = require('./routes/communications/rooms/room');
-const channelroute = require('./routes/communications/rooms/channel');
 const userroute = require('./routes/user/user');
-
 //app
 const app = express();
 //middlewares
@@ -45,7 +41,7 @@ app.post('/testReq', (req,res) => {
 });
 
 //db
-const client = require('/Users/saibabaalapati/Desktop/magexpress/backend/database.js')
+const client = require('/Users/saibabaalapati/Desktop/magexpressbackend/database.js')
 client.connect()
     .then(() => console.log('Database Connected......'))
     .catch(err => console.log('Error: ' + err))
@@ -62,9 +58,6 @@ app.use('/user',userroute)
     .use('/api/:userid',trackercontainerroute)
     .use('/api/:userid/:trackercontainerid',categorycontainerroute)
     .use('/api/:userid/:trackercontainerid',trackerroute)
-    .use('/api/:userid',roomroute)
-    .use('/api/:userid/:roomid',channelroute)
-    .use('/api/:userid',directchatroute);
 
 
 
