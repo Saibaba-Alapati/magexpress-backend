@@ -1,5 +1,46 @@
 const client = require('.././../database');
 
+//GET ALL THE PROJECTS OF A USER
+exports.getProjects  = (req,res) =>{
+    const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
+    const query = {
+        name: 'create project',
+        text : 'SELECT * FROM WHERE userid=$1',
+        values : [userid]
+    }
+    client
+        .query(query)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || " Some error occurred while retrieving projects info. "
+            });
+        });
+}
+
+//GET PROJECT
+exports.getProjects  = (req,res) =>{
+    const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
+    const query = {
+        name: 'create project',
+        text : 'SELECT * FROM WHERE userid=$1',
+        values : [projectid]
+    }
+    client
+        .query(query)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            message:
+                err.message || " Some error occurred while retrieving projects info. "
+            });
+        });
+}
 //CREATE AND SAVE A PROJECT TO DATABASE 
 exports.createProject = (req,res) =>{
     //VALIDATE REQUEST

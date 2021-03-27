@@ -6,9 +6,7 @@ const cookieParser = require('cookie-parser');
 
 
 // IMPORTING ROUTERS
-const trackercontainerroute = require('./routes/tracker/trackercontainer');
-const categorycontainerroute = require('./routes/tracker/categorycontainer');
-const trackerroute = require('./routes/tracker/tracker');
+const trackerroute = require('./routes/tracker/trackerroute');
 const userroute = require('./routes/user/user');
 //app
 const app = express();
@@ -55,9 +53,7 @@ app.listen(PORT, () => {
     console.log(`Listening on http://localhost:${PORT}`);
 });
 app.use('/user',userroute)
-    .use('/api/:userid',trackercontainerroute)
-    .use('/api/:userid/:trackercontainerid',categorycontainerroute)
-    .use('/api/:userid/:trackercontainerid',trackerroute)
+    .use('/api/:userid/',trackerroute)
 
 
 

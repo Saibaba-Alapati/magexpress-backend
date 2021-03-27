@@ -1,6 +1,13 @@
 const client = require('.././../database');
 // CREATE A TRACKER CONTAINER
 exports.createComment = (req, res) =>{
+    const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
+    const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
+    const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
+    const trackercontainerid = (req.body.trackercontainerid != null) ? req.body.trackercontainerid : req.params.trackercontainerid;
+    const categorycontainerid = (req.body.categorycontainerid != null) ? req.body.categorycontainerid : req.params.categorycontainerid;
+    const trackerid = (req.body.trackerid != null) ? req.body.trackerid : req.params.trackerid;
+
     // VAlIDATE REQUEST
     if (!req.body.content) {
         res.status(400).send({
@@ -11,8 +18,8 @@ exports.createComment = (req, res) =>{
     }
     const query ={
         name : 'create-trackercomment',
-        text :'INSERT INTO trackercomment(creatorid,trackercontainerid,categorycontainerid ,content,tracker) VALUES($1,$2,$3,$4) RETURNING *',
-        values :[req.params.userid,req.params.trackercontainerid,req.params.categorycontainerid, req.body.content,req.params.trackerid]
+        text :'INSERT INTO trackercomment(creatorid,projectid,trackercontainerid,categorycontainerid,tracker,content) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
+        values :[userid,projectid,trackercontainerid,categorycontainerid,trackerid,req.body.content]
     }
     client
         .query(query)
