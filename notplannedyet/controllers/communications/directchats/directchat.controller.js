@@ -1,4 +1,4 @@
-const client = require('/Users/saibabaalapati/Desktop/magexpress/backend/database.js')
+const client = require('.././../database');
 exports.createDirectChat = (req, res) => {
     const query ={
         name : 'create-directchat',

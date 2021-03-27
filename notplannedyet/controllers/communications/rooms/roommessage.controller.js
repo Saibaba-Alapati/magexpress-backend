@@ -1,4 +1,4 @@
-const client = require('/Users/saibabaalapati/Desktop/magexpress/backend/database.js')
+const client = require('.././../database');
 // CREATE AND SAVE ROOM MESSAGE
 exports.createRoomMessage = (req, res) => {
     const query ={

@@ -1,5 +1,4 @@
 -- sequelize-automate -t js -h localhost -d magexpresstest -u postgres -p sab@1009 -P 5432  -e postgres  -o "./models"
--- sequelize-automate -t js -h localhost -d magexpresstest -u postgres -p sab@1009 -P 5432  -e postgres  -o "./models"
 CREATE TYPE activitystatus AS ENUM ('online', 'offline');
 
 CREATE TABLE  person (
@@ -22,7 +21,7 @@ CREATE TABLE project (
 	description TEXT,
 	createdat TIMESTAMP,
 	updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
 
 CREATE TABLE trackercontainer (
 	id BIGSERIAL PRIMARY KEY,
@@ -33,8 +32,6 @@ CREATE TABLE trackercontainer (
 	createdat TIMESTAMP,
 	updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-
 
 CREATE TABLE categorycontainer (
     id BIGSERIAL PRIMARY KEY,
@@ -56,8 +53,8 @@ CREATE TABLE tracker(
 	name VARCHAR NOT NULL,
 	content TEXT,
 	createdat TIMESTAMP,
-	startdate DATE;
-	enddate DATE;
+	startdate DATE,
+	enddate DATE,
 	updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -148,10 +145,6 @@ ALTER TABLE linkedtrackers ADD FOREIGN KEY (trackerid2 ) REFERENCES tracker (id)
 ALTER TABLE assignees ADD FOREIGN KEY (assigneeid ) REFERENCES person (id);
 
 ALTER TABLE assignees ADD FOREIGN KEY (trackerid ) REFERENCES tracker (id);
-
-ALTER TABLE usersandrooms ADD FOREIGN KEY (userid ) REFERENCES person (id);
-
-ALTER TABLE usersandrooms ADD FOREIGN KEY (roomid ) REFERENCES room (id);
 
 ALTER TABLE usersandtrackercontainers ADD FOREIGN KEY (userid ) REFERENCES person (id);
 
@@ -250,3 +243,6 @@ ALTER TABLE roommessage ADD FOREIGN KEY (creatorid) REFERENCES person (id);
 
 ALTER TABLE roommessage ADD FOREIGN KEY (replyid) REFERENCES roommessage (id);
 
+ALTER TABLE usersandrooms ADD FOREIGN KEY (userid ) REFERENCES person (id);
+
+ALTER TABLE usersandrooms ADD FOREIGN KEY (roomid ) REFERENCES room (id);

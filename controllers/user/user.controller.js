@@ -182,6 +182,11 @@ exports.deleteUserandInfo = async(req,res) => {
         values :[ req.params.userid]
     }
     const query6 ={
+        name : 'delete-project',
+        text :'DELETE project WHERE creatorid =$1',
+        values :[ req.params.userid]
+    }
+    const query7 ={
         name : 'delete-user',
         text :'DELETE person WHERE id =$1',
         values :[ req.params.userid]
@@ -205,17 +210,25 @@ exports.deleteUserandInfo = async(req,res) => {
                                                     client
                                                         .query(query5)
                                                         .then(num => {
-                                                            client
+                                                            if(num==1){
+                                                                client
                                                                 .query(query6)
                                                                 .then(num => {
-                                                                    if(num === 1){
-                                                                        res.send({
-                                                                            message:
-                                                                                " Deleted all user data. "
-                                                                        });
+                                                                    if(num==1){
+                                                                        client
+                                                                            .query(query7)
+                                                                            .then(num => {
+                                                                                if(num === 1){
+                                                                                    res.send({
+                                                                                        message:
+                                                                                            " Deleted all user data. "
+                                                                                    });
+                                                                                }
+                                                                            })
                                                                     }
                                                                 }
                                                             )
+                                                            }
                                                         }
                                                     )
                                                 }

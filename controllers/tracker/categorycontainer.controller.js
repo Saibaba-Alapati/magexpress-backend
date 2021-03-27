@@ -3,17 +3,17 @@ const client = require('.././../database');
 // CREATE AND SAVE A CATEGORY CONTAINER TO DATABASE
 exports.createCategoryContainer = (req, res) => {
     // VALIDATE REQUEST
-    if (!req.body.name) {
+    if (req.body.name) {
         res.status(400).send({
             message:
                 " Name cannot be empty. "
         });
         return;
     }
-    const query ={
+    const query = {
         name : 'create-categorycontainer',
-        text :'INSERT INTO categorycontainer(creatorid,trackercontainerid,name,description) VALUES($1,$2,$3,$4) RETURNING *',
-        values :[req.params.userid,req.params.trackercontainerid,req.body.name,req.body.description,]
+        text : 'INSERT INTO categorycontainer(creatorid,trackercontainerid,name,description) VALUES($1,$2,$3,$4) RETURNING *',
+        values :[req.params.userid,req.params.trackercontainerid,req.body.name,req.body.description]
     }
     client
         .query(query)

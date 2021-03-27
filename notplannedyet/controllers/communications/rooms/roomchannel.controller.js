@@ -1,4 +1,4 @@
-const client = require('/Users/saibabaalapati/Desktop/magexpress/backend/database.js')
+const client = require('.././../database');
 
 // Create and Save a new Channel
 exports.createChannel = (req, res) => {

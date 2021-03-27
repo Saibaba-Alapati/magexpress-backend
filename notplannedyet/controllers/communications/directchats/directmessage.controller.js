@@ -1,4 +1,4 @@
-const client = require('/Users/saibabaalapati/Desktop/magexpress/backend/database.js')
+const client = require('.././../database');
 // CREATE AND SAVE DIRECT MESSAGE
 // modify receiver id logic
 exports.createDirectMessage = async(req, res) => {

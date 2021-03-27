@@ -148,10 +148,6 @@ ALTER TABLE assignees ADD FOREIGN KEY (assigneeid ) REFERENCES person (id);
 
 ALTER TABLE assignees ADD FOREIGN KEY (trackerid ) REFERENCES tracker (id);
 
-ALTER TABLE usersandrooms ADD FOREIGN KEY (userid ) REFERENCES person (id);
-
-ALTER TABLE usersandrooms ADD FOREIGN KEY (roomid ) REFERENCES room (id);
-
 ALTER TABLE usersandtrackercontainers ADD FOREIGN KEY (userid ) REFERENCES person (id);
 
 ALTER TABLE usersandtrackercontainers ADD FOREIGN KEY (trackercontainerid ) REFERENCES trackercontainer (id);
@@ -249,3 +245,6 @@ ALTER TABLE roommessage ADD FOREIGN KEY (creatorid) REFERENCES person (id);
 
 ALTER TABLE roommessage ADD FOREIGN KEY (replyid) REFERENCES roommessage (id);
 
+ALTER TABLE usersandrooms ADD FOREIGN KEY (userid ) REFERENCES person (id);
+
+ALTER TABLE usersandrooms ADD FOREIGN KEY (roomid ) REFERENCES room (id);

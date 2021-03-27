@@ -1,7 +1,7 @@
 {
   "name": "magexpressbackend",
   "version": "1.0.0",
-  "description": "A communication application for managament purposes (\"Collabration\")",
+  "description": "A bugtracker application for managament purposes (\"Collabration\")",
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
@@ -22,10 +22,7 @@
     "nodemon": "^2.0.7",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "peer": "^0.6.1",
-    "pg": "^8.5.1",
-    "socket.io": "^3.0.5",
-    "validator": "^13.5.2"
+    "pg": "^8.5.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
