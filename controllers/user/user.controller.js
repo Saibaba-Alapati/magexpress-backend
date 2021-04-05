@@ -1,6 +1,6 @@
 const client = require('.././../database');
 
-exports.create = async(req,res) => {
+exports.createUser = async(req,res) => {
     // try{
     //     const query ={
     //         name : 'signup',
@@ -75,7 +75,7 @@ exports.create = async(req,res) => {
             });
         });
 }
-exports.findOne = (req, res) =>{
+exports.findOneUser = (req, res) =>{
     const userid = (!req.params.userid) ? req.body.userid : req.params.userid
     const query ={
         name : 'find-user',
@@ -96,7 +96,7 @@ exports.findOne = (req, res) =>{
         })
 }
 
-exports.update = async(req,res) => {
+exports.updateUser = async(req,res) => {
     const userid = (!req.params.userid) ? req.body.userid : req.params.userid
     const query ={
         name : 'update-userinfo',
@@ -125,7 +125,7 @@ exports.update = async(req,res) => {
         });
         });
 }
-exports.updatePassword = async(req,res) => {
+exports.updateUserPassword = async(req,res) => {
     const userid = (!req.params.userid) ? req.body.userid : req.params.userid
     const query ={
         name : 'update-password',

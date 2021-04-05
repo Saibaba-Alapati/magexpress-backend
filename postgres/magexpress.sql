@@ -106,6 +106,11 @@ CREATE TABLE usersandtrackercontainers(
 	trackercontainerid INT NOT NULL
 );
 
+CREATE TABLE usersandtrackercontainers(
+	userid INT NOT NULL,
+	projectid INT NOT NULL
+);
+
 ALTER TABLE project ADD FOREIGN KEY(creatorid) REFERENCES person (id);
 
 ALTER TABLE trackercontainer ADD FOREIGN KEY(projectid) REFERENCES project (id);
@@ -151,6 +156,10 @@ ALTER TABLE assignees ADD FOREIGN KEY (trackerid ) REFERENCES tracker (id);
 ALTER TABLE usersandtrackercontainers ADD FOREIGN KEY (userid ) REFERENCES person (id);
 
 ALTER TABLE usersandtrackercontainers ADD FOREIGN KEY (trackercontainerid ) REFERENCES trackercontainer (id);
+
+ALTER TABLE usersandprojects ADD FOREIGN KEY (userid ) REFERENCES person (id);
+
+ALTER TABLE usersandprojects ADD FOREIGN KEY (trackercontainerid ) REFERENCES project (id);
 
 ALTER TABLE todo ADD FOREIGN KEY(creatorid) REFERENCES person(id);
 

@@ -22,10 +22,10 @@ exports.getProjects  = (req,res) =>{
 }
 
 //GET PROJECT
-exports.getProjects  = (req,res) =>{
+exports.getTheProject  = (req,res) =>{
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query = {
-        name: 'create project',
+        name: 'get a particular project',
         text : 'SELECT * FROM WHERE userid=$1',
         values : [projectid]
     }
@@ -124,7 +124,7 @@ exports.deleteProject = (req,res) =>{
 
 
 exports.deleteProjectandInfo = async(req,res) => {
-    const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.userid;
+    const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query1 ={
         name : 'delete-trackercomment',
         text :'DELETE trackercomment WHERE creatorid =$1',
@@ -215,5 +215,70 @@ exports.deleteProjectandInfo = async(req,res) => {
             message:
                 err.message || " Could not delete project and its info. "
         });
+        });
+}
+
+
+// JOIN ACCESS TO Project
+exports.joinProject = (req, res) => {
+    const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
+    const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
+    const query ={
+        name : 'join-project',
+        text :'INSERT INTO usersandtprojects(userid,projectid) VALUES ($1,$2) RETURNING *',
+        values :[userid,projectid]
+    }
+    client
+        .query(query)
+        .then(data =>{
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || " Error retrieving the TrackerContainer. "
+            });
+        });
+};
+
+
+// CHECK USER ACCESS
+exports.userAccessCheck = (req,res) => {
+    const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
+    const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
+    const query ={
+        name : 'check-access-to-trackercontainer',
+        text :'INSERT INTO usersandtprojects(userid,projectid) VALUES ($1,$2) RETURNING *',
+        values :[userid,projectid]
+    }
+    client
+        .query(query)
+        .then(function(data){
+            if(!data){
+                return 'user notfound'
+            }else{
+                const query ={
+                    name : 'check-access-to-trackercontainer',
+                    text :'SELECT * FROM project WHERE id =$1',
+                    values :[req.body.projectid ]
+                }
+                client
+                    .query(query)
+                    .then(data =>{
+                        res.send(data);
+                    })
+                    .catch(err => {
+                        res.status(500).send({
+                            message:
+                            err.message || "Error retrieving the TrackerContainer"
+                        });
+                    });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Error check for access."
+            });
         });
 }

@@ -38,10 +38,11 @@ exports.createTrackerContainer = (req, res) => {
 // FIND ALL TRACKER CONTAINERS USER HAD ACCESS TO
 exports.findAllContainersRelatedToUser = (req, res) => {
     const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
+    const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query ={
         name : 'get-alltrackercontainer',
-        text :'SELECT * FROM usersandtrackercontainers WHERE userid =$1',
-        values :[userid]
+        text :'SELECT * FROM usersandtrackercontainers WHERE userid =$1 AND projectid=$2',
+        values :[userid,projectid]
     }
     client
         .query(query)
@@ -59,10 +60,11 @@ exports.findAllContainersRelatedToUser = (req, res) => {
 // FIND TRACKER CONTAINER
 exports.findOneTrackerContainer = (req, res) => {
     const trackercontainerid = (req.body.trackercontainerid != null) ? req.body.trackercontainerid : req.params.trackercontainerid;
+    const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query ={
         name : 'get-trackercontainer',
-        text :'SELECT * FROM trackercontainer WHERE id =$1',
-        values :[trackercontainerid]
+        text :'SELECT * FROM trackercontainer WHERE id =$1 AND projectid = $2',
+        values :[trackercontainerid,projectid]
     }
     client
         .query(query)
@@ -81,8 +83,9 @@ exports.findOneTrackerContainer = (req, res) => {
 exports.joinTrackerContainer = (req, res) => {
     const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
     const trackercontainerid = (req.body.trackercontainerid != null) ? req.body.trackercontainerid : req.params.trackercontainerid;
+    // const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query ={
-        name : 'get-trackercontainer',
+        name : 'join-trackercontainer',
         text :'INSERT INTO usersandtrackercontainers(userid,trackercontainerid) VALUES ($1,$2) RETURNING *',
         values :[userid,trackercontainerid ]
     }
@@ -97,8 +100,8 @@ exports.joinTrackerContainer = (req, res) => {
                     err.message || " Error retrieving the TrackerContainer. "
             });
         });
+};
 
-}
 // CHECK USER ACCESS
 exports.userAccessCheck = (req,res) => {
     const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
