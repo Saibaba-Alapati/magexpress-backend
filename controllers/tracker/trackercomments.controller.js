@@ -3,7 +3,6 @@ const client = require('.././../database');
 exports.createComment = (req, res) =>{
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
-    const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const trackercontainerid = (req.body.trackercontainerid != null) ? req.body.trackercontainerid : req.params.trackercontainerid;
     const categorycontainerid = (req.body.categorycontainerid != null) ? req.body.categorycontainerid : req.params.categorycontainerid;
     const trackerid = (req.body.trackerid != null) ? req.body.trackerid : req.params.trackerid;

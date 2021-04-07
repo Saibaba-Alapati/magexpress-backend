@@ -39,7 +39,7 @@ app.post('/testReq', (req,res) => {
 });
 
 //db
-const client = require('/Users/saibabaalapati/Desktop/magexpressbackend/database.js')
+const client = require('./database')
 client.connect()
     .then(() => console.log('Database Connected......'))
     .catch(err => console.log('Error: ' + err))
