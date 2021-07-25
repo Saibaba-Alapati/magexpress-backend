@@ -65,8 +65,7 @@ exports.createUser = async(req,res) => {
     client
         .query(query)
         .then(data => {
-            console.log(data);
-            res.send(data)
+            res.send(data.rows);
         })
         .catch(err => {
             res.status(500).send({
@@ -76,19 +75,23 @@ exports.createUser = async(req,res) => {
         });
 }
 exports.findOneUser = (req, res) =>{
-    const userid = (!req.params.userid) ? req.body.userid : req.params.userid
+    // console.log(req.query.username);
+    // console.log(req.query.password);
     const query ={
         name : 'find-user',
-        text : 'SELECT * FROM person WHERE id=$1',
-        values : [userid]
+        text : 'SELECT * FROM person WHERE username=$1 AND password=$2',
+        values : [req.query.username,req.query.password]
     }
     client
-        .connect()
         .query(query)
-        .then(data=>{
-            res.send(data);
+        .then(results=>{
+            // console.log("Called Login")
+            const rows = results.rows
+            // res.status(200).json({response:{results:rows}});
+            res.status(200).json({results:rows});
         })
         .catch(err => {
+            console.log(err)
             res.status(500).send({
                 message:
                     err.message || " User not found. "
