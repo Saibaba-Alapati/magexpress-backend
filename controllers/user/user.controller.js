@@ -1,42 +1,80 @@
-const db = require('../../databaseInfo');
-const User = require('../../models/user');
+const client = require('.././../database');
 
-exports.createUser = async(req,res)=>{
-    try {
-        console.log(req);
-        // let firstname = req.body.firstname;
-        const {firstname,lastname,username,gender,email,password} = req.body;
-        console.log(username);
-        User.create(firstname,lastname,username,gender,email,password)
-            .then(()=>console.log("sucess"))
-            .catch((error)=>console.log("//////////////////"+error));
-    } catch (error) {
-        console.error(error)
+exports.createUser = async(req,res) => {
+    // try{
+    //     const query ={
+    //         name : 'signup',
+    //         text : 'INSERT INTO person(firstname,lastname,username,companyname,email,password) VALUES($1,$2,$3,$4,$5) RETURNING *',
+    //         values : [req.body.firstname,req.body.lastname,req.body.username,req.body.companyname,req.body.email,req.body.password]
+    //     }
+    //     await client.connect()
+    //     console.log("Connected successfully")
+    //     await client.query("BEGIN")
+    //     const {rows} = await client.query(query)
+    //     console.table(rows)
+    //     await client.query("COMMIT")
+    // }
+    // catch (err) {
+    //     console.log(err)
+    //     await client.query("ROLLBACK")
+    // }
+    // finally {
+    //     await client.end()
+    //     console.log("Created")
+    // }
+    // if(!req.body.firstname){
+    //     res.status(400).send({
+    //         message:
+    //             "Firstname cannot be empty!"
+    //     })
+    //     return;
+    // }
+    // if(!req.body.lastname){
+    //     res.status(400).send({
+    //         message:
+    //             "Lastname cannot be empty!"
+    //     })
+    //     return;
+    // }
+    // if(!req.body.username){
+    //     res.status(400).send({
+    //         message:
+    //             " Username cannot be empty!"
+    //     })
+    //     return;
+    // }
+    // if(!req.body.email){
+    //     res.status(400).send({
+    //         message:
+    //             "Email cannot be empty!"
+    //     })
+    //     return;
+    // }
+    // if(!req.body.password){
+    //     res.status(400).send({
+    //         message:
+    //             " Password cannot be empty!"
+    //     })
+    //     return;
+    // }
+    const query ={
+        name : 'signup',
+        text : 'INSERT INTO person(firstname,lastname,username,gender,email,password) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
+        values : [req.body.firstname,req.body.lastname,req.body.username,req.body.gender,req.body.email,req.body.password]
     }
-} 
-
-
-// async(req,res) => {
-//     const data = await
-//     const query ={
-//         name : 'signup',
-//         text : 'INSERT INTO person(firstname,lastname,username,email,password) VALUES($1,$2,$3,$4,$5) RETURNING *',
-//         values : [req.body.firstname,req.body.lastname,req.body.username,req.body.email,req.body.password]
-//     }
-//     client
-//         .query(query)
-//         .then(data => {
-//             console.log(req.body);
-//             res.send(data)
-//         })
-//         .catch(err => {
-//             console.log(req.body);
-//             res.status(500).send({
-//                 message:
-//                     err.message || " Some error occurred while creating the Tutorial. "
-//             });
-//         },);
-// }
+    client
+        .query(query)
+        .then(data => {
+            console.log(data);
+            res.send(data)
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || " Some error occurred while creating the Tutorial. "
+            });
+        });
+}
 exports.findOneUser = (req, res) =>{
     const userid = (!req.params.userid) ? req.body.userid : req.params.userid
     const query ={
@@ -48,11 +86,9 @@ exports.findOneUser = (req, res) =>{
         .connect()
         .query(query)
         .then(data=>{
-            console.log("called");
             res.send(data);
         })
         .catch(err => {
-            console.log(req.body);
             res.status(500).send({
                 message:
                     err.message || " User not found. "
@@ -224,62 +260,3 @@ exports.deleteUserandInfo = async(req,res) => {
         });
 }
 
-
-
-
-    // try{
-    //     const query ={
-    //         name : 'signup',
-    //         text : 'INSERT INTO person(firstname,lastname,username,companyname,email,password) VALUES($1,$2,$3,$4,$5) RETURNING *',
-    //         values : [req.body.firstname,req.body.lastname,req.body.username,req.body.companyname,req.body.email,req.body.password]
-    //     }
-    //     await client.connect()
-    //     console.log("Connected successfully")
-    //     await client.query("BEGIN")
-    //     const {rows} = await client.query(query)
-    //     console.table(rows)
-    //     await client.query("COMMIT")
-    // }
-    // catch (err) {
-    //     console.log(err)
-    //     await client.query("ROLLBACK")
-    // }
-    // finally {
-    //     await client.end()
-    //     console.log("Created")
-    // }
-    // if(!req.body.firstname){
-    //     res.status(400).send({
-    //         message:
-    //             "Firstname cannot be empty!"
-    //     })
-    //     return;
-    // }
-    // if(!req.body.lastname){
-    //     res.status(400).send({
-    //         message:
-    //             "Lastname cannot be empty!"
-    //     })
-    //     return;
-    // }
-    // if(!req.body.username){
-    //     res.status(400).send({
-    //         message:
-    //             " Username cannot be empty!"
-    //     })
-    //     return;
-    // }
-    // if(!req.body.email){
-    //     res.status(400).send({
-    //         message:
-    //             "Email cannot be empty!"
-    //     })
-    //     return;
-    // }
-    // if(!req.body.password){
-    //     res.status(400).send({
-    //         message:
-    //             " Password cannot be empty!"
-    //     })
-    //     return;
-    // }

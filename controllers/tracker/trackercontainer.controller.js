@@ -1,4 +1,4 @@
-const client = require('../../databaseInfo');
+const client = require('../../database');
 // CREATE AND SAVE TRACKER CONTAINER
 exports.createTrackerContainer = (req, res) => {
     const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;

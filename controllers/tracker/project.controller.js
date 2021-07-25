@@ -1,4 +1,4 @@
-const client = require('../../databaseInfo');
+const client = require('../../database');
 
 //GET ALL THE PROJECTS OF A USER
 exports.getProjects  = (req,res) =>{

@@ -4,11 +4,12 @@ require('dotenv').config();
 const session = require("express-session");
 const cookieParser = require('cookie-parser');
 
+
 // IMPORTING ROUTERS
-// const trackerroute = require('./routes/tracker/trackerroute');
+const trackerroute = require('./routes/tracker/trackerroute');
+const userroute = require('./routes/user');
 //app
 const app = express();
-const person = require('./controllers/user/user.controller')
 //middlewares
 app
     .use(express.json())
@@ -38,19 +39,21 @@ app.post('/testReq', (req,res) => {
 });
 
 //db
-const db = require("./databaseInfo");
-db.authenticate()
-    .then(()=> console.log("Database Connected..."))
-    .catch((error)=>console.error(error));
+const client = require('./database')
+client.connect()
+    .then(() => console.log('Database Connected......'))
+    .catch(err => console.log('Error: ' + err))
+
+
 //routes
-app.use('/user',person.createUser);
+
 const PORT = process.env.PORT||8080;
 
 app.listen(PORT, () => {
     console.log(`Listening on http://localhost:${PORT}`);
 });
-// app.use('/user',userroute)
-//     .use('/api/:userid/',trackerroute)
+app.use('/user',userroute)
+    .use('/api/:userid/',trackerroute)
 
 
 
