@@ -4,7 +4,7 @@ const CategoryContainer = db.define('categorycontainer',{
   creator_id: {
     type:Sequelize.INTEGER,
     references:{
-      model:'user',
+      model:'person',
       key:'id',
     }
   },

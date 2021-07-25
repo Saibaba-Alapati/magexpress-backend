@@ -4,7 +4,7 @@ const TrackerComment = db.define('trackercomment',{
   creator_id: {
       type:Sequelize.INTEGER,
       references:{
-        model:'user',
+        model:'person',
         key:'id',
       }
     },

@@ -4,21 +4,21 @@ const Tracker = db.define('tracker',{
   creator_id: {
     type:Sequelize.INTEGER,
     references:{
-    model:'user',
+    model:'person',
     key:'id',
     }
   },
   trackercontainer_id: {
     type:Sequelize.INTEGER,
     references:{
-    model:'user',
+    model:'trackercontainer',
     key:'id',
     }
   },
   categorycontainer_id: {
     type:Sequelize.INTEGER,
     references:{
-    model:'user',
+    model:'categorycontainer',
     key:'id',
     }
   },

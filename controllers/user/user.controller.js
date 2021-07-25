@@ -1,6 +1,19 @@
 const db = require('../../databaseInfo');
 const User = require('../../models/user');
-const Project = require('../../models/project');
+
+exports.createUser = async(req,res)=>{
+    try {
+        console.log(req);
+        // let firstname = req.body.firstname;
+        const {firstname,lastname,username,gender,email,password} = req.body;
+        console.log(username);
+        User.create(firstname,lastname,username,gender,email,password)
+            .then(()=>console.log("sucess"))
+            .catch((error)=>console.log("//////////////////"+error));
+    } catch (error) {
+        console.error(error)
+    }
+} 
 
 
 // async(req,res) => {

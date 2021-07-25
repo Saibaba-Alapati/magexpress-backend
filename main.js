@@ -6,9 +6,9 @@ const cookieParser = require('cookie-parser');
 
 // IMPORTING ROUTERS
 // const trackerroute = require('./routes/tracker/trackerroute');
-// const userroute = require('./routes/user/user');
 //app
 const app = express();
+const person = require('./controllers/user/user.controller')
 //middlewares
 app
     .use(express.json())
@@ -43,7 +43,7 @@ db.authenticate()
     .then(()=> console.log("Database Connected..."))
     .catch((error)=>console.error(error));
 //routes
-
+app.use('/user',person.createUser);
 const PORT = process.env.PORT||8080;
 
 app.listen(PORT, () => {

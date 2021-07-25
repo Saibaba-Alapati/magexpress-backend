@@ -4,7 +4,7 @@ const Assignee = db.define('assignee',{
     assignee_id: {
       type: Sequelize.INTEGER,
       references:{
-        model:'user',
+        model:'person',
         key:'id'
       }
     },

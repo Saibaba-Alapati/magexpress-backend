@@ -4,7 +4,7 @@ const TrackerContainer = db.define('trackercontainer',{
   creator_id: {
     type:Sequelize.INTEGER,
     references:{
-      model:'user',
+      model:'person',
       key:'id'
     }
   },

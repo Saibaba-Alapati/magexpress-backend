@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../databaseInfo');
-const User = db.define('user',{
+const User = db.define('person',{
   firstname: {
     type:Sequelize.STRING,
     allowNull:false,
