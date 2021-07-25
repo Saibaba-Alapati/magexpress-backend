@@ -21,7 +21,7 @@ CREATE TABLE project (
 	description TEXT,
 	createdat TIMESTAMP,
 	updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);
 
 CREATE TABLE trackercontainer (
 	id BIGSERIAL PRIMARY KEY,
@@ -32,8 +32,6 @@ CREATE TABLE trackercontainer (
 	createdat TIMESTAMP,
 	updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-
 
 CREATE TABLE categorycontainer (
     id BIGSERIAL PRIMARY KEY,
@@ -55,22 +53,8 @@ CREATE TABLE tracker(
 	name VARCHAR NOT NULL,
 	content TEXT,
 	createdat TIMESTAMP,
-	startdate DATE;
-	enddate DATE;
-	updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-
-CREATE TABLE todo(
-	id BIGSERIAL PRIMARY KEY,
-	creatorid INT NOT NULL,
-	trackercontainerid INT NOT NULL,
-    categorycontainerid INT NOT NULL,
-	projectid INT NOT NULL,
-	trackerid INT NOT NULL,
-	name VARCHAR NOT NULL,
-	content TEXT,
-	createdat TIMESTAMP,
+	startdate DATE,
+	enddate DATE,
 	updatedat TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -106,7 +90,7 @@ CREATE TABLE usersandtrackercontainers(
 	trackercontainerid INT NOT NULL
 );
 
-CREATE TABLE usersandtrackercontainers(
+CREATE TABLE usersandprojects(
 	userid INT NOT NULL,
 	projectid INT NOT NULL
 );
@@ -159,15 +143,7 @@ ALTER TABLE usersandtrackercontainers ADD FOREIGN KEY (trackercontainerid ) REFE
 
 ALTER TABLE usersandprojects ADD FOREIGN KEY (userid ) REFERENCES person (id);
 
-ALTER TABLE usersandprojects ADD FOREIGN KEY (trackercontainerid ) REFERENCES project (id);
-
-ALTER TABLE todo ADD FOREIGN KEY(creatorid) REFERENCES person(id);
-
-ALTER TABLE todo ADD FOREIGN KEY(trackercontainerid) REFERENCES trackercontainer(id);
-
-ALTER TABLE todo ADD FOREIGN KEY(projectid) REFERENCES project(id);
-
-ALTER TABLE todo ADD FOREIGN KEY(trackerid) REFERENCES tracker(id);
+ALTER TABLE usersandprojects ADD FOREIGN KEY (projectid) REFERENCES project (id);
 
 -- UPCOMING WORK NOT YET PLANNED
 

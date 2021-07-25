@@ -1,4 +1,4 @@
-const client = require('.././../database');
+const client = require('../../databaseInfo');
 // CREATE A TRACKER CONTAINER
 exports.createComment = (req, res) =>{
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;

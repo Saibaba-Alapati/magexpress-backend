@@ -1,4 +1,4 @@
-const client = require('.././../database');
+const client = require('../../databaseInfo');
 
 // CREATE AND SAVE A CATEGORY CONTAINER TO DATABASE
 exports.createCategoryContainer = (req, res) => {
