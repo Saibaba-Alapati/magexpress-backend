@@ -176,7 +176,7 @@ exports.deleteUserandInfo = async(req,res) => {
     }
     const query4 ={
         name : 'delete-useraccess-trackercontainer',
-        text :'DELETE usersandtrackercontainers WHERE creatorid =$1',
+        text :'DELETE userandtrackercontainer WHERE creatorid =$1',
         values :[ req.params.userid]
     }
     const query5 ={

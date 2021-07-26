@@ -6,7 +6,7 @@ exports.createCategoryContainer = (req, res) => {
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const trackercontainerid = (req.body.trackercontainerid != null) ? req.body.trackercontainerid : req.params.trackercontainerid;
     // VALIDATE REQUEST
-    if (req.body.name) {
+    if (!req.body.name) {
         res.status(400).send({
             message:
                 " Name cannot be empty. "
@@ -15,15 +15,18 @@ exports.createCategoryContainer = (req, res) => {
     }
     const query = {
         name : 'create-categorycontainer',
-        text : 'INSERT INTO categorycontainer(creatorid,projectid,trackercontainerid,name,description) VALUES($1,$2,$3,$4,$5) RETURNING *',
+        text : 'INSERT INTO categorycontainer(creator_id,project_id,trackercontainer_id,name,description) VALUES($1,$2,$3,$4,$5) RETURNING *',
         values :[userid,projectid,trackercontainerid,req.body.name,req.body.description]
     }
     client
         .query(query)
-        .then(data => {
-            res.send(data);
+        .then(results => {
+            console.log("Sucess: "+query.values);
+            const rows = results.rows;
+            res.send({reponse:{rows}});
         })
         .catch(err => {
+            console.log("Error: "+query.values);
             res.status(500).send({
             message:
                 err.message || " Could not create a CategoryContainer. "
@@ -32,17 +35,18 @@ exports.createCategoryContainer = (req, res) => {
 };
 
 // FIND ALL CATEGORY CONTAINERS OF TRACKER CONTAINER
-exports.FACCOTC = (req, res) => {
+exports.findAllCCofTC = (req, res) => {
     const trackercontainerid = (req.body.trackercontainerid != null) ? req.body.trackercontainerid : req.params.trackercontainerid;
     const query ={
         name : 'get-allcategorycontainer-of-trackercontainer',
-        text :'SELECT * FROM categorycontainer WHERE trackercontainerid =$1',
+        text :'SELECT * FROM categorycontainer WHERE trackercontainer_id =$1',
         values :[trackercontainerid]
     }
     client
         .query(query)
-        .then(data => {
-            res.send(data);
+        .then(results => {
+            const rows = results.rows;
+            res.send(rows);
         })
         .catch(err => {
             res.status(500).send({
@@ -53,17 +57,18 @@ exports.FACCOTC = (req, res) => {
 };
 
 // FIND ALL TRACKERS OF CATEGORY CONTAINER
-exports.FATOCC = (req, res) => {
-    const categorycontainerid = (req.body.categorycontainerid != null) ? req.body.categorycontainerid : req.params.trackercontainerid;
+exports.findAllTrackersofCC = (req, res) => {
+    const categorycontainerid = (req.body.categorycontainerid != null) ? req.body.categorycontainerid : req.params.categorycontainerid;
     const query ={
         name : 'get-allcategorycontainer-of-trackercontainer',
-        text :'SELECT * FROM tracker WHERE categorycontainerid =$1',
+        text :'SELECT * FROM tracker WHERE categorycontainer_id =$1',
         values :[categorycontainerid]
     }
     client
         .query(query)
-        .then(data => {
-            res.send(data);
+        .then(results => {
+            const rows = results.rows;
+            res.send(rows);
         })
         .catch(err => {
             res.status(500).send({
@@ -74,12 +79,12 @@ exports.FATOCC = (req, res) => {
 };
 
 // MOVE TRACKER TO OTHER CATEGORY CONTAINER
-exports.MTOCC = (req, res) => {
+exports.moveTrackerofCC = (req, res) => {
     const trackerid = (req.body.trackerid != null) ? req.body.trackerid : req.params.trackerid;
     const query ={
         name : 'get-allcategorycontainer-of-trackercontainer',
-        text :'UPDATE tracker SET categorycontainerid=$1 WHERE id =$2',
-        values :[req.body.tocategorycontainerid,trackerid]
+        text :'UPDATE tracker SET categorycontainer_id=$1 WHERE id =$2',
+        values :[req.body.categorycontainerid,trackerid]
     }
     client
         .query(query)
@@ -111,13 +116,14 @@ exports.updateCategoryContainer = (req, res) => {
     const categorycontainerid = (req.body.categorycontainerid!=null) ? req.body.categorycontainerid : req.params.categorycontainerid;
     const query ={
         name : 'get-allcategorycontainer-of-trackercontainer',
-        text :'UPDATE tracker SET name=$1,description=$2 WHERE id =$3',
+        text :'UPDATE tracker SET name=$1,description=$2 WHERE id=$3',
         values :[req.body.name,req.body.description,categorycontainerid]
     }
     client
         .query(query)
-        .then(data =>{
-            res.send(data);
+        .then(results => {
+            const rows = results.rows;
+            res.send(rows);
         })
         .catch(err =>{
             res.status(500).send({
@@ -129,11 +135,11 @@ exports.updateCategoryContainer = (req, res) => {
 
 
 // DELETE CATEGORY CONTAINER WITH TRACKERS
-exports.DCCWT = (req, res) => {
+exports.deleteCCwithTrackers = (req, res) => {
     const categorycontainerid = (req.body.categorycontainerid!=null) ? req.body.categorycontainerid : req.params.categorycontainerid;
     const query ={
         name : 'delete-trackers-of-categorycontainer',
-        text :'DELETE tracker WHERE categorycontainerid =$1',
+        text :'DELETE tracker WHERE categorycontainer_id =$1',
         values :[categorycontainerid]
     }
     client
@@ -181,11 +187,11 @@ exports.DCCWT = (req, res) => {
 
 
 // DELETE ALL TRACKERS FROM CATEGORY CONTAINER
-exports.DATFCC = (req, res) => {
+exports.deleteAllTrackersFromCC = (req, res) => {
     const categorycontainerid = (req.body.categorycontainerid!=null) ? req.body.categorycontainerid : req.params.categorycontainerid;
     const query ={
         name : 'delete-trackers-of-categorycontainer',
-        text :'DELETE tracker WHERE categorycontainerid =$1',
+        text :'DELETE tracker WHERE categorycontainer_id =$1',
         values :[categorycontainerid]
     }
     client

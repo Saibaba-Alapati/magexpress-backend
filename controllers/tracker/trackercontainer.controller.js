@@ -1,5 +1,6 @@
 const client = require('../../database');
 // CREATE AND SAVE TRACKER CONTAINER
+//need to add user to permisiosn table from client.
 exports.createTrackerContainer = (req, res) => {
     const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
@@ -11,21 +12,20 @@ exports.createTrackerContainer = (req, res) => {
     }
     const query ={
         name : 'create-trackercontainer',
-        text :'INSERT INTO trackercontainer(name,description,creatorid,projectid) VALUES($1,$2,$3,$4) RETURNING *',
+        text :'INSERT INTO trackercontainer(name,description,creator_id,project_id) VALUES($1,$2,$3,$4) RETURNING *',
         values :[req.body.name,req.body.description,userid,projectid]
     }
     client
         .query(query)
-        .then(data =>
+        .then(results =>
         {
             const query ={
                 name : 'create-trackercomment',
-                text :'INSERT INTO usersandtrackercontainers(userid,trackercontainerid) VALUES($1,$2) RETURNING *',
-                values :[data.creator,data.id]
+                text :'INSERT INTO trackercontainers(userid,trackercontainerid) VALUES($1,$2) RETURNING *',
+                values :[results.rows[0].creator_id,results.rows[0].id]
             }
-            client
-                .query(query)
-            res.send(data);
+            const rows = results.rows;
+            res.send({response:{rows}});
         })
         .catch(err =>
             res.status(500).send({
@@ -41,7 +41,7 @@ exports.findAllContainersRelatedToUser = (req, res) => {
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query ={
         name : 'get-alltrackercontainer',
-        text :'SELECT * FROM usersandtrackercontainers WHERE userid =$1 AND projectid=$2',
+        text :'SELECT * FROM trackercontainers WHERE user_id =$1 AND project_id=$2',
         values :[userid,projectid]
     }
     client
@@ -63,7 +63,7 @@ exports.findOneTrackerContainer = (req, res) => {
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query ={
         name : 'get-trackercontainer',
-        text :'SELECT * FROM trackercontainer WHERE id =$1 AND projectid = $2',
+        text :'SELECT * FROM trackercontainer WHERE id =$1 AND project_id = $2',
         values :[trackercontainerid,projectid]
     }
     client
@@ -86,7 +86,7 @@ exports.joinTrackerContainer = (req, res) => {
     // const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query ={
         name : 'join-trackercontainer',
-        text :'INSERT INTO usersandtrackercontainers(userid,trackercontainerid) VALUES ($1,$2) RETURNING *',
+        text :'INSERT INTO trackercontainers(user_id,trackercontainer_id) VALUES ($1,$2) RETURNING *',
         values :[userid,trackercontainerid ]
     }
     client
@@ -108,7 +108,7 @@ exports.userAccessCheck = (req,res) => {
     const trackercontainerid = (req.body.trackercontainerid != null) ? req.body.trackercontainerid : req.params.trackercontainerid;
     const query ={
         name : 'check-access-to-trackercontainer',
-        text :'SELECT * FROM usersandtrackercontainers WHERE userid =$1',
+        text :'SELECT * FROM userandtrackercontainer WHERE user_id =$1',
         values :[userid,trackercontainerid ]
     }
     client
@@ -176,22 +176,22 @@ exports.deleteTCWithCCandTRandTCR = (req, res) => {
     const trackercontainerid = (req.body.trackercontainerid != null) ? req.body.trackercontainerid : req.params.trackercontainerid;
     const query1 ={
         name : 'delete-trackercomment',
-        text :'DELETE trackercomment WHERE trackercontainerid =$1',
+        text :'DELETE trackercomment WHERE trackercontainer_id =$1',
         values :[trackercontainerid]
     }
     const query2 ={
         name : 'delete-trackers',
-        text :'DELETE tracker WHERE trackercontainerid =$1',
+        text :'DELETE tracker WHERE trackercontainer_id =$1',
         values :[trackercontainerid]
     }
     const query3 ={
         name : 'delete-catgorycontainer',
-        text :'DELETE categorycontainer WHERE trackercontainerid =$1',
+        text :'DELETE categorycontainer WHERE trackercontainer_id =$1',
         values :[trackercontainerid]
     }
     const query4 ={
         name : 'delete-useraccess-trackercontainer',
-        text :'DELETE usersandtrackercontainers WHERE trackercontainerid =$1',
+        text :'DELETE trackercontainers WHERE trackercontainer_id =$1',
         values :[trackercontainerid]
     }
     const query5 ={

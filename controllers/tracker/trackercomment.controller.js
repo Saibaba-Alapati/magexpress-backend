@@ -17,7 +17,7 @@ exports.createComment = (req, res) =>{
     }
     const query ={
         name : 'create-trackercomment',
-        text :'INSERT INTO trackercomment(creatorid,projectid,trackercontainerid,categorycontainerid,tracker,content) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
+        text :'INSERT INTO trackercomment(creator_id,project_id,trackercontainer_id,categorycontainer_id,tracker_id,content) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
         values :[userid,projectid,trackercontainerid,categorycontainerid,trackerid,req.body.content]
     }
     client
@@ -43,7 +43,7 @@ exports.updateComment = (req, res) =>{
     }
     const query ={
         name : 'update-trackercomment',
-        text :'UPDATE trackercomment SET content =$1 WHERE id =$2',
+        text :'UPDATE trackercomment SET content=$1 WHERE id=$2',
         values :[req.body.content,req.body.trackercommentid]
     }
     client

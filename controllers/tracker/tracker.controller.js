@@ -6,16 +6,16 @@ exports.createTracker = (req, res) => {
     const trackercontainerid = (req.body.trackercontainerid != null) ? req.body.trackercontainerid : req.params.trackercontainerid;
     const categorycontainerid = (req.body.categorycontainerid != null) ? req.body.categorycontainerid : req.params.categorycontainerid;
     // Validate request
-    if (!req.body.title) {
+    if (!req.body.name) {
         res.status(400).send({
-            message: " Content can not be empty! "
+            message: "name can not be empty! "
         });
         return;
     }
     const query ={
         name : 'delete-trackercomments',
-        text :'INSERT INTO tracker(creatorid,projectid,trackercontainerid,categorycontainerid,content) VALUES($1,$2,$3,$4,$5) RETURNING *',
-        values :[userid,projectid,trackercontainerid,categorycontainerid,req.body.content]
+        text :'INSERT INTO tracker(creator_id,project_id,trackercontainer_id,categorycontainer_id,name,content) VALUES($1,$2,$3,$4,$5,$6) RETURNING *',
+        values :[userid,projectid,trackercontainerid,categorycontainerid,req.body.name,req.body.content]
     }
     client
         .query(query)
@@ -37,7 +37,7 @@ exports.findAllCommentsOnTracker = (req, res) => {
 
     const query ={
         name : 'delete-trackercomments',
-        text :'SELECT * FROM trackercomment WHERE trackerid =$1',
+        text :'SELECT * FROM trackercomment WHERE tracker_id=$1',
         values :[trackerid]
     }
     client
@@ -59,7 +59,7 @@ exports.findOneTracker = (req, res) => {
     const trackerid = (req.body.trackerid != null) ? req.body.trackerid : req.params.trackerid;
     const query ={
         name : 'delete-trackercomments',
-        text :'SELECT * FROM tracker WHERE id =$1',
+        text :'SELECT * FROM tracker WHERE id=$1',
         values :[trackerid]
     }
     client
@@ -81,7 +81,7 @@ exports.updateTracker = (req, res) => {
     const trackerid = (req.body.trackerid != null) ? req.body.trackerid : req.params.trackerid;
     const query ={
         name : 'delete-trackercomments',
-        text :'UPDATE tracker SET content =$1 WHERE id =$2 RETURNING *',
+        text :'UPDATE tracker SET content=$1 WHERE id=$2 RETURNING *',
         values :[req.body.content,trackerid]
     }
     client
@@ -102,7 +102,7 @@ exports.deleteTracker = (req, res) => {
     const trackerid = (req.body.trackerid != null) ? req.body.trackerid : req.params.trackerid;
     const query ={
         name : 'delete-trackercomments',
-        text :'DELETE trackercomment WHERE trackerid =$1',
+        text :'DELETE trackercomment WHERE tracker_id =$1',
         values :[trackerid]
     }
     client

@@ -137,32 +137,37 @@ exports.deleteProjectandInfo = async(req,res) => {
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query1 ={
         name : 'delete-trackercomment',
-        text :'DELETE trackercomment WHERE creatorid =$1',
+        text :'DELETE trackercomment WHERE creator_id =$1',
+        values :[projectid]
+    }
+    const query1 ={
+        name : 'delete-trackercomment',
+        text :'DELETE trackercomment WHERE creator_id =$1',
         values :[projectid]
     }
     const query2 ={
         name : 'delete-trackers',
-        text :'DELETE tracker WHERE creatorid =$1',
+        text :'DELETE tracker WHERE creator_id =$1',
         values :[projectid]
     }
     const query3 ={
         name : 'delete-catgorycontainer',
-        text :'DELETE categorycontainer WHERE creatorid =$1',
+        text :'DELETE categorycontainer WHERE creator_id =$1',
         values :[projectid]
     }
     const query4 ={
         name : 'delete-useraccess-trackercontainer',
-        text :'DELETE usersandtrackercontainers WHERE creatorid =$1',
+        text :'DELETE userandtrackercontainer WHERE creator_id =$1',
         values :[projectid]
     }
     const query5 ={
         name : 'delete-trackercontainer',
-        text :'DELETE trackercontainer WHERE creatorid =$1',
+        text :'DELETE trackercontainer WHERE creator_id =$1',
         values :[projectid]
     }
     const query6 ={
         name : 'delete-project',
-        text :'DELETE project WHERE creatorid =$1',
+        text :'DELETE project WHERE creator_id =$1',
         values :[projectid]
     }
     client
@@ -235,7 +240,7 @@ exports.joinProject = (req, res) => {
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query ={
         name : 'join-project',
-        text :'INSERT INTO usersandtprojects(userid,projectid) VALUES ($1,$2) RETURNING *',
+        text :'INSERT INTO userandproject(userid,projectid) VALUES ($1,$2) RETURNING *',
         values :[userid,projectid]
     }
     client
@@ -259,7 +264,7 @@ exports.userAccessCheck = (req,res) => {
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query ={
         name : 'check-access-to-trackercontainer',
-        text :'INSERT INTO usersandtprojects(userid,projectid) VALUES ($1,$2) RETURNING *',
+        text :'INSERT INTO userandtproject(userid,projectid) VALUES ($1,$2) RETURNING *',
         values :[userid,projectid]
     }
     client
