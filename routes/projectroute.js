@@ -3,12 +3,12 @@ const projectroute = express.Router();
 const project = require('../controllers/tracker/project.controller');
 
 projectroute
-    .get('/:userid/getall',project.getProjects) //project
-    .get('/:userid/get',project.getTheProject) //project
-    .put('/:userid/update',project.updateProject) //project
-    .post('/:userid/join',project.joinProject) //project
-    .delete('/:userid/delete',project.deleteProject) //project
-    .get('/:userid/useraccesscheck',project.userAccessCheck) //project
-    .post('/:userid/create',project.createProject) //project
+    .get('/:userid/getall',project.getAllProjects)
+    .get('/:userid/get',project.getProject)
+    .put('/:userid/update',project.updateProject)
+    .post('/:userid/join',project.joinProject)
+    .delete('/:userid/delete',project.deleteProject)
+    .get('/:userid/useraccesscheck',project.userAccessCheck)
+    .post('/:userid/create',project.createProject);
 
 module.exports = projectroute;

@@ -34,28 +34,6 @@ exports.createCategoryContainer = (req, res) => {
         });
 };
 
-// FIND ALL CATEGORY CONTAINERS OF TRACKER CONTAINER
-exports.findAllCCofTC = (req, res) => {
-    const trackercontainerid = (req.body.trackercontainerid != null) ? req.body.trackercontainerid : req.params.trackercontainerid;
-    const query ={
-        name : 'get-allcategorycontainer-of-trackercontainer',
-        text :'SELECT * FROM categorycontainer WHERE trackercontainer_id =$1',
-        values :[trackercontainerid]
-    }
-    client
-        .query(query)
-        .then(results => {
-            const rows = results.rows;
-            res.send(rows);
-        })
-        .catch(err => {
-            res.status(500).send({
-            message:
-                err.message || " Some error occurred while retrieving category containers. "
-            });
-        });
-};
-
 // FIND ALL TRACKERS OF CATEGORY CONTAINER
 exports.findAllTrackersofCC = (req, res) => {
     const categorycontainerid = (req.body.categorycontainerid != null) ? req.body.categorycontainerid : req.params.categorycontainerid;

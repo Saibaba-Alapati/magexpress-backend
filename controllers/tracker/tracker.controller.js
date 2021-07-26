@@ -31,6 +31,7 @@ exports.createTracker = (req, res) => {
         });
 };
 
+
 // FIND ALL COMMENTS ON A TRACKER
 exports.findAllCommentsOnTracker = (req, res) => {
     const trackerid = (req.body.trackerid != null) ? req.body.trackerid : req.params.trackerid;

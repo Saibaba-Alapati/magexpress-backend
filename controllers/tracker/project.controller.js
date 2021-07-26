@@ -1,7 +1,7 @@
 const client = require('../../database');
 
 //GET ALL THE PROJECTS OF A USER
-exports.getProjects  = (req,res) =>{
+exports.getAllProjects  = (req,res) =>{
     const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
     const query = {
         name: 'create project',
@@ -23,7 +23,7 @@ exports.getProjects  = (req,res) =>{
 }
 
 //GET PROJECT
-exports.getTheProject  = (req,res) =>{
+exports.getProject  = (req,res) =>{
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query = {
         name: 'get a particular project',
@@ -135,11 +135,6 @@ exports.deleteProject = (req,res) =>{
 
 exports.deleteProjectandInfo = async(req,res) => {
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
-    const query1 ={
-        name : 'delete-trackercomment',
-        text :'DELETE trackercomment WHERE creator_id =$1',
-        values :[projectid]
-    }
     const query1 ={
         name : 'delete-trackercomment',
         text :'DELETE trackercomment WHERE creator_id =$1',

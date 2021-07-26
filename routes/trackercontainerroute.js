@@ -4,13 +4,14 @@ const trackercontainerroute = express.Router();
 const trackercontainer = require('../controllers/tracker/trackercontainer.controller');
     
 trackercontainerroute
-    .post('/:userid/:projectid/createtc',trackercontainer.createTrackerContainer) //Tracker Container
-    .get('/:userid/:projectid/getalltcofuser',trackercontainer.findAllContainersRelatedToUser) //Tracker Container
-    .get('/:userid/:projectid/gettc',trackercontainer.findOneTrackerContainer) //Tracker Container
-    .post('/:userid/:projectid/jointc',trackercontainer.joinTrackerContainer) //Tracker Container
-    .post('/:userid/:projectid/:trackercontainerid/jointc',trackercontainer.joinTrackerContainer) //Tracker Container
-    .get('/:userid/:projectid/checkaccess',trackercontainer.userAccessCheck) //Tracker Container
-    .delete('/:userid/:projectid/deletetc',trackercontainer.deleteTCWithCCandTRandTCR) //Tracker Container
-    .put('/:userid/:projectid/:trackercontainerid/updatetc',trackercontainer.updateTrackerContainer) //Tracker Container
+    .post('/:userid/:projectid/create',trackercontainer.createTrackerContainer)
+    .get('/:userid/:projectid/getalltcofuser',trackercontainer.findAllContainersRelatedToUser)
+    .get('/:userid/:projectid/get',trackercontainer.findOneTrackerContainer)
+    .post('/:userid/:projectid/join',trackercontainer.joinTrackerContainer)
+    .post('/:userid/:projectid/:trackercontainerid/join',trackercontainer.joinTrackerContainer)
+    .get('/:userid/:projectid/checkaccess',trackercontainer.userAccessCheck)
+    .delete('/:userid/:projectid/deletetcandcontents',trackercontainer.deleteTrackerContainerandContent)
+    .put('/:userid/:projectid/:trackercontainerid/update',trackercontainer.updateTrackerContainer)
+    .get('/:userid/:projectid/:trackercontainerid/getallcc',trackercontainer.findAllCCofTC);
 
     module.exports = trackercontainerroute;
