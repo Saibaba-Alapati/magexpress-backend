@@ -11,8 +11,8 @@ exports.getProjects  = (req,res) =>{
     client
         .query(query)
         .then(results => {
-            const rows = results.rows
-            res.send({resutls:{rows}});
+            const rows = results.rows;;
+            res.send({response:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -33,8 +33,8 @@ exports.getTheProject  = (req,res) =>{
     client
         .query(query)
         .then(results => {
-            const rows = results.rows
-            res.send({resutls:{rows}});
+            const rows = results.rows;
+            res.send({response:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -96,8 +96,8 @@ exports.updateProject = (req,res) =>{
     client
         .query(query)
         .then(results =>{
-            const rows = results.rows
-            res.send({resutls:{rows}});
+            const rows = results.rows;
+            res.send({response:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -241,8 +241,8 @@ exports.joinProject = (req, res) => {
     client
         .query(query)
         .then(results =>{
-            const rows = results.rows
-            res.send({resutls:{rows}});
+            const rows = results.rows;
+            res.send({response:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -276,8 +276,8 @@ exports.userAccessCheck = (req,res) => {
                 client
                     .query(query)
                     .then(results =>{
-                        const rows = results.rows
-                        res.send({resutls:{rows}});
+                        const rows = results.rows;
+                        res.send({response:{rows}});
                     })
                     .catch(err => {
                         res.status(500).send({

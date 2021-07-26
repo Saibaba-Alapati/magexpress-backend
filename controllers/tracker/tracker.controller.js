@@ -21,7 +21,7 @@ exports.createTracker = (req, res) => {
         .query(query)
         .then(results => {
             const rows = results.rows;
-            res.send({results:{rows}});
+            res.send({response:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -44,7 +44,7 @@ exports.findAllCommentsOnTracker = (req, res) => {
         .query(query)
         .then(results => {
             const rows = results.rows;
-            res.send({results:{rows}});
+            res.send({response:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -66,7 +66,7 @@ exports.findOneTracker = (req, res) => {
         .query(query)
         .then(data=> {
             const rows = results.rows;
-            res.send({results:{rows}});
+            res.send({response:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -88,7 +88,7 @@ exports.updateTracker = (req, res) => {
         .query(query)
         .then(results => {
             const rows = results.rows;
-            res.send({results:{rows}});
+            res.send({response:{rows}});
         })
         .catch(err => {
             res.status(500).send({
