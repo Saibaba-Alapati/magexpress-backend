@@ -19,8 +19,9 @@ exports.createTracker = (req, res) => {
     }
     client
         .query(query)
-        .then(data => {
-            res.send(data);
+        .then(results => {
+            const rows = results.rows;
+            res.send({results:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -41,8 +42,9 @@ exports.findAllCommentsOnTracker = (req, res) => {
     }
     client
         .query(query)
-        .then(data => {
-            res.send(data);
+        .then(results => {
+            const rows = results.rows;
+            res.send({results:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -63,7 +65,8 @@ exports.findOneTracker = (req, res) => {
     client
         .query(query)
         .then(data=> {
-            res.send(data);
+            const rows = results.rows;
+            res.send({results:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -78,13 +81,14 @@ exports.updateTracker = (req, res) => {
     const trackerid = (req.body.trackerid != null) ? req.body.trackerid : req.params.trackerid;
     const query ={
         name : 'delete-trackercomments',
-        text :'UPDATE tracker SET content =$1 WHERE id =$2',
+        text :'UPDATE tracker SET content =$1 WHERE id =$2 RETURNING *',
         values :[req.body.content,trackerid]
     }
     client
         .query(query)
-        .then(data => {
-            res.send(data);
+        .then(results => {
+            const rows = results.rows;
+            res.send({results:{rows}});
         })
         .catch(err => {
             res.status(500).send({

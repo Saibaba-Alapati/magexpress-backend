@@ -5,13 +5,14 @@ exports.getProjects  = (req,res) =>{
     const userid = (req.body.userid != null) ? req.body.userid : req.params.userid;
     const query = {
         name: 'create project',
-        text : 'SELECT * FROM WHERE userid=$1',
+        text : 'SELECT * FROM userandproject WHERE useer_id=$1',
         values : [userid]
     }
     client
         .query(query)
-        .then(data => {
-            res.send(data);
+        .then(results => {
+            const rows = results.rows
+            res.send({resutls:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -26,13 +27,14 @@ exports.getTheProject  = (req,res) =>{
     const projectid = (req.body.projectid != null) ? req.body.projectid : req.params.projectid;
     const query = {
         name: 'get a particular project',
-        text : 'SELECT * FROM WHERE userid=$1',
+        text : 'SELECT * FROM project WHERE id=$1',
         values : [projectid]
     }
     client
         .query(query)
-        .then(data => {
-            res.send(data);
+        .then(results => {
+            const rows = results.rows
+            res.send({resutls:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -44,24 +46,31 @@ exports.getTheProject  = (req,res) =>{
 //CREATE AND SAVE A PROJECT TO DATABASE 
 exports.createProject = (req,res) =>{
     //VALIDATE REQUEST
-    if(req.body.name){
+    if(!req.body.name){
         res.status(400).send({
             message:
-                " Name cannot be empty. "
+                " name field cannot be empty. "
         });
         return;
     }
     const query = {
         name: 'create project',
-        text : 'INSERT INTO project(creatorid,name,description) VALUES($1,$2,$3,$4) RETURNING *',
+        text : 'INSERT INTO project(creator_id,name,description) VALUES($1,$2,$3) RETURNING *',
         values : [req.params.userid,req.body.name,req.body.description]
     }
     client
         .query(query)
-        .then(data=>{
-            res.send(data);
+        .then(results=>{
+            // console.log("success: "+req.body);
+            // console.log("success: "+query.values);
+            const rows = results.rows;
+            // console.log("success: "+rows);
+            res.send({reponse:{rows}});
         })
         .catch(err => {
+            // console.log("error: "+req.body);
+            // console.log("error: "+req.path);
+            // console.log("error: "+query.values);
             res.status(500).send({
                 message:
                     err.message || " Could not create the Project. "
@@ -74,7 +83,7 @@ exports.updateProject = (req,res) =>{
     if(req.body.name){
         res.status(400).send({
             message:
-                " Name cannot be empty. "
+                " name cannot be empty. "
         });
         return;
     }
@@ -86,8 +95,9 @@ exports.updateProject = (req,res) =>{
     }
     client
         .query(query)
-        .then(data=>{
-            res.send(data);
+        .then(results =>{
+            const rows = results.rows
+            res.send({resutls:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -230,8 +240,9 @@ exports.joinProject = (req, res) => {
     }
     client
         .query(query)
-        .then(data =>{
-            res.send(data);
+        .then(results =>{
+            const rows = results.rows
+            res.send({resutls:{rows}});
         })
         .catch(err => {
             res.status(500).send({
@@ -264,8 +275,9 @@ exports.userAccessCheck = (req,res) => {
                 }
                 client
                     .query(query)
-                    .then(data =>{
-                        res.send(data);
+                    .then(results =>{
+                        const rows = results.rows
+                        res.send({resutls:{rows}});
                     })
                     .catch(err => {
                         res.status(500).send({
